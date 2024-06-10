@@ -25,8 +25,8 @@ export default function Home() {
 
     return (
 
-        <SafeAreaView className="flex-1  bg-pink-100 p-4">
-            <Text className="text-2xl font-bold mb-10">Oii Louisi 😘</Text>
+        <SafeAreaView className="flex-1  bg-red-100 p-4">
+            <Text className="text-2xl font-bold mb-10">Oi, Luffy!</Text>
             <View className="flex-1 items-center ">
 
                 < StyledDropdown data={data} label={"Selecione um mês"} value={value} isFocus={isFocus}
@@ -45,10 +45,10 @@ export default function Home() {
 
                 <View className="flex flex-row gap-8">
                     <Text className="">Progresso</Text>
-                    <Text className="">R$1.100/R$1.500</Text>
+                    <Text className="">R$800/R$1.500</Text>
                 </View>
                 <View className="w-80 mt-6 items-center justify-center">
-                    <ProgressBar progress={70} />
+                    <ProgressBar progress={40} />
                 </View>
 
 

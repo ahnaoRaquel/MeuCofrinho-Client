@@ -35,7 +35,7 @@ export default function Despesa({ navigation }) {
                             Alert.alert('Modal has been closed.');
                             setModalVisible(!modalVisible);
                         }}>
-                        <View className="mx-4 my-auto bg-red-100 items-center justify-center shadow rounded-lg ">
+                        <View className="mx-4 my-auto bg-red-400 items-center justify-center shadow rounded-lg ">
                             <Text className="m-8 text-2xl font-bold">Despesa</Text>
 
                             <StyledTextInput value={text} onChangeText={onChangeText} label={"Descrição"} />
