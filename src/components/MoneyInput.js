@@ -5,9 +5,15 @@ export default function MoneyInput(props) {
     const [value, setValue] = useState('');
 
     const formatMoney = (text) => {
+        // Remove all non-numeric characters
         let cleaned = text.replace(/[^0-9]/g, '');
+
+        // Convert to a number and format
         let num = parseInt(cleaned, 10) / 100;
+
+        // Format to currency
         let formatted = 'R$ ' + num.toFixed(2);
+
         return formatted;
     };
 

@@ -19,10 +19,11 @@ export default function SignUp({ navigation }) {
 
     const onChangeDate = (event, selectedDate) => {
         const currentDate = selectedDate || date;
-        setShowDatePicker(Platform.OS === 'ios'); 
+        setShowDatePicker(Platform.OS === 'ios'); // Only show on iOS, Android shows inline
         setDate(currentDate);
+        // Format the selected date to display in your desired format
         const formattedDate = `${currentDate.getDate()}/${currentDate.getMonth() + 1}/${currentDate.getFullYear()}`;
-        setTextDtNasc(formattedDate);
+        setTextDtNasc(formattedDate); // Update your text input value
     };
 
     const criarConta = async () => {

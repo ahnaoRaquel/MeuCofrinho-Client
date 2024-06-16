@@ -14,13 +14,13 @@ const styles = StyleSheet.create({
         marginHorizontal: 20,
         width: '100%',
         height: 40,
-        backgroundColor: '#FFF',
+        backgroundColor: '#FFF', 
         borderRadius: 12,
         overflow: 'hidden',
     },
     filler: {
         height: '100%',
-        backgroundColor: '#B22222',
+        backgroundColor: '#c40c0c', 
         borderRadius: 12,
     },
 });

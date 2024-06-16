@@ -9,8 +9,8 @@ import * as SecureStore from 'expo-secure-store';
 
 
 export default function SignIn({ navigation }) {
-    const [username, setUsername] = React.useState('luffy@gmail.com');
-    const [password, setPassword] = React.useState('essaeasenha1');
+    const [username, setUsername] = React.useState('');
+    const [password, setPassword] = React.useState('');
     const { token, setToken } = useAuth();
 
 

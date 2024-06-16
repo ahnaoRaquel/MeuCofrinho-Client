@@ -73,7 +73,7 @@ export default function DespesaModal({ modalVisible, setModalVisible, listMes, l
                 Alert.alert('Modal has been closed.');
                 setModalVisible(!modalVisible);
             }}>
-            <View className="mx-4 my-auto bg-pink-100 items-center justify-center shadow rounded-lg ">
+            <View className="mx-4 my-auto bg-red-100 items-center justify-center shadow rounded-lg ">
                 <Text className="m-8 text-2xl font-bold">Despesa</Text>
                 <StyledTextInput value={descricao} onChangeText={setDescricao} label={"Descrição"} />
                 <StyledTextInput value={valor} onChangeText={setValor} label={"Valor"} />
@@ -93,14 +93,14 @@ export default function DespesaModal({ modalVisible, setModalVisible, listMes, l
 
                 <View className="flex flex-row gap-3 mt-4" >
                     <Pressable
-                        className="bg-pink-50 p-2 m-4 w-28 items-center rounded-md text-white shadow"
+                        className="bg-red-50 p-2 m-4 w-28 items-center rounded-md text-white shadow"
                         onPress={() => setModalVisible(false)}>
-                        <Text className="text-pink-400 text-lg font-semibold">
+                        <Text className="text-red-400 text-lg font-semibold">
                             {"Cancelar"}
                         </Text>
                     </Pressable>
                     <Pressable
-                        className="bg-pink-400 p-2 m-4 w-28 items-center rounded-md text-white shadow"
+                        className="bg-red-400 p-2 m-4 w-28 items-center rounded-md text-white shadow"
                         onPress={salvarDespesa}>
                         <Text className="text-white text-lg font-semibold">
                             {"Salvar"}

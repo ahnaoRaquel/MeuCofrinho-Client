@@ -39,8 +39,8 @@ function TabNavigator() {
                     return <Icon name={iconName} size={size} color={color} />;
                 },
                 tabBarActiveTintColor: 'white', // Active icon color
-                tabBarInactiveTintColor: '#fbcfe8', // Inactive icon color
-                tabBarStyle: { backgroundColor: '#f472b6' }, // Tab bar background color
+                tabBarInactiveTintColor: 'white', // Inactive icon color
+                tabBarStyle: { backgroundColor: '#c40c0c' }, // Tab bar background color
                 headerShown: false,
             })}
         >

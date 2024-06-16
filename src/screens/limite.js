@@ -6,7 +6,6 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { Entypo } from '@expo/vector-icons';
 import { useAuth } from '../lib/AuthProvider';
 import LimiteModal from './limiteModal';
-import StyledButton from '../components/StyledButton';
 
 const listMes = [
     { label: 'Janeiro', value: '1' },
@@ -29,7 +28,7 @@ export default function Limite({ navigation }) {
     const [selectedMes, setSelectedMes] = useState(null);
     const [listAnos, setListAnos] = useState([]);
     const [modalVisible, setModalVisible] = useState(false);
-    const [data, setData] = useState();
+    const [limite, setLimite] = useState();
     const { token } = useAuth();
 
     function getYearsFromCurrent(numYears) {
@@ -45,7 +44,6 @@ export default function Limite({ navigation }) {
         }
         return listAno;
     }
-
 
     const getMonthLabel = (value) => {
         const month = listMes.find(item => item.value == value);
@@ -66,11 +64,11 @@ export default function Limite({ navigation }) {
 
             if (response.ok) {
                 const data = await response.json();
-                console.log(data); 
-                setData(data)
+                console.log(data);  // Handle your data here
+                setLimite(data)
             } else {
                 console.log('Erro na resposta:', response.status, response.statusText);
-                const errorData = await response.json(); 
+                const errorData = await response.json(); // Se houver mensagem de erro detalhada do servidor
                 Alert.alert('Erro', errorData.errors || errorData.message || 'Erro desconhecido');
             }
         } catch (error) {
@@ -123,22 +121,30 @@ export default function Limite({ navigation }) {
                             }} />
 
                     </View>
+                    <Pressable
+                        className="bg-red-400 mb-9 rounded-md text-white w-80 items-center shadow flex-1"
+                        onPress={() => lerLimite(selectedMes, selectedAno)}>
 
-                    {data != null ?
+                        <View className=" bg-red-400 m-1 p-2 rounded ">
+                            <MaterialIcons name="search" size={18} color="white" />
+                        </View>
+                    </Pressable>
+
+                    {limite != null ?
                         <>
                             <View className="flex flex-row items-center justify-start">
                                 <View className="w-44 bg-red-400 m-1 p-3 rounded flex-1 flex-row items-center justify-center  ">
-                                    <Text className="text-white font-bold flex-1 ">{`${getMonthLabel(data.mes)}/${data.ano}`}</Text>
+                                    <Text className="text-white font-bold flex-1 ">{`${getMonthLabel(limite.mes)}/${limite.ano}`}</Text>
 
-                                    <Text className="text-white font-bold flex ">{`R$ ${data.valorLimite}`}</Text>
+                                    <Text className="text-white font-bold flex ">{`R$ ${limite.valorLimite}`}</Text>
                                 </View>
                             </View>
 
                             <View className="flex flex-row items-center justify-start ">
-                                <View className="w-20 bg-red-400 m-1 p-2 rounded flex-1 flex-row  items-center justify-center">
+                                {/* <View className="w-20 bg-red-400 m-1 p-2 rounded flex-1 flex-row  items-center justify-center">
                                     <Text className="text-white font-semibold">Editar</Text>
                                     <Entypo name="edit" size={18} color="white" />
-                                </View>
+                                </View> */}
                                 <View className="w-20 bg-red-400 m-1 p-2 rounded flex-1 flex-row items-center justify-center">
                                     <Text className="text-white font-semibold">Excluir</Text>
                                     <MaterialIcons name="delete" size={18} color="white" />

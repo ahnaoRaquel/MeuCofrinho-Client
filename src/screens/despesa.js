@@ -78,6 +78,8 @@ export default function Despesa({ navigation }) {
         }
     }
 
+
+
     useEffect(() => {
         setListAnos(getYearsFromCurrent(5));
     }, []);
@@ -123,6 +125,14 @@ export default function Despesa({ navigation }) {
                                 setIsFocus(false);
                             }} />
                     </View>
+                    <Pressable
+                        className="bg-red-400 mb-9 rounded-md text-white w-80 items-center shadow flex-1"
+                        onPress={() => lerDespesas(selectedMes, selectedAno)}>
+
+                        <View className=" bg-red-400 m-1 p-2 rounded ">
+                            <MaterialIcons name="search" size={18} color="white" />
+                        </View>
+                    </Pressable>
                     {despesas.length > 0 ? despesas.map((despesa, index) => (
                         <View key={index} className="flex flex-row items-center justify-start">
                             <View className="w-44 bg-red-400 m-1 p-2 rounded">
@@ -131,9 +141,9 @@ export default function Despesa({ navigation }) {
                             <View className="w-16 bg-red-400 m-1 p-2 rounded">
                                 <Text className="text-white">{`R$ ${despesa.valor}`}</Text>
                             </View>
-                            <View className="w-8 bg-red-400 m-1 p-2 rounded items-center">
+                            {/* <View className="w-8 bg-red-400 m-1 p-2 rounded items-center">
                                 <Entypo name="edit" size={18} color="white" />
-                            </View>
+                            </View> */}
                             <View className="w-8 bg-red-400 m-1 p-2 rounded items-center">
                                 <MaterialIcons name="delete" size={18} color="white" />
                             </View>
