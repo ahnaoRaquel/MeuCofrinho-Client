@@ -1,149 +1,146 @@
 import React, { useState, useEffect } from 'react';
-import { Alert, Modal, Pressable, ScrollView, Text, View } from 'react-native';
+import { Pressable, ScrollView, Text, View, Alert, Modal } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import StyledTextInput from '../components/StyledTextInput';
 import StyledDropdown from '../components/StyledDropdown';
+import StyledTextInput from '../components/StyledTextInput';
 import { MaterialIcons } from '@expo/vector-icons';
 import { Entypo } from '@expo/vector-icons';
+import { useAuth } from '../lib/AuthProvider';
+import StyledButton from '../components/StyledButton';
+import DespesaModal from './despesaModal';
 
 const listMes = [
-    { label: 'Fevereiro', value: '1' },
-    { label: 'Março', value: '2' },
-    { label: 'Abril', value: '3' },
-    { label: 'Maio', value: '4' },
-    { label: 'Junho', value: '5' },
-    { label: 'Julho', value: '6' },
+    { label: 'Janeiro', value: '1' },
+    { label: 'Fevereiro', value: '2' },
+    { label: 'Março', value: '3' },
+    { label: 'Abril', value: '4' },
+    { label: 'Maio', value: '5' },
+    { label: 'Junho', value: '6' },
+    { label: 'Julho', value: '7' },
+    { label: 'Agosto', value: '8' },
+    { label: 'Setembro', value: '9' },
+    { label: 'Outubro', value: '10' },
+    { label: 'Novembro', value: '11' },
+    { label: 'Dezembro', value: '12' },
 ];
 
 export default function Despesa({ navigation }) {
-    const [value, setValue] = React.useState(null);
-    const [isFocus, setIsFocus] = React.useState(false);
-    const [text, onChangeText] = React.useState('text');
-    const [modalVisible, setModalVisible] = React.useState(false);
-
-    const [selectedAno, setSelectedAno] = React.useState(null);
-    const [selectedMes, setSelectedMes] = React.useState(null);
-
+    const [isFocus, setIsFocus] = useState(false);
+    const [selectedAno, setSelectedAno] = useState(null);
+    const [selectedMes, setSelectedMes] = useState(null);
     const [listAnos, setListAnos] = useState([]);
+    const [modalVisible, setModalVisible] = useState(false);
+    const [despesas, setDespesas] = useState([]);
+    const { token } = useAuth();
 
     function getYearsFromCurrent(numYears) {
-        var currentTime = new Date();
-        var year = currentTime.getFullYear();
-        var listAno = [];
-        for (var i = 0; i < numYears; i++) {
+        const listAno = [];
+        const currentTime = new Date();
+        const year = currentTime.getFullYear();
+
+        for (let i = 0; i < numYears; i++) {
             listAno.push({
                 label: (year + i).toString(),
-                value: (i + 1).toString()
+                value: year + i
             });
         }
         return listAno;
+    }
+
+    const getMonthLabel = (value) => {
+        const month = listMes.find(item => item.value == value);
+        return month ? month.label : '';
+    };
+
+    const lerDespesas = async (mes, ano) => {
+        try {
+            const response = await fetch(`http://localhost:8080/despesas/buscar?mes=${mes}&ano=${ano}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`,
+                },
+                timeout: 10000,
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                console.log(data);
+                setDespesas(data);
+            } else {
+                console.log('Erro na resposta:', response.status, response.statusText);
+                const errorData = await response.json();
+                Alert.alert('Erro', errorData.errors || errorData.message || 'Erro desconhecido');
+            }
+        } catch (error) {
+            console.error('Erro ao buscar despesas:', error);
+            Alert.alert('', 'Nenhuma despesa encontrada');
+        }
     }
 
     useEffect(() => {
         setListAnos(getYearsFromCurrent(5));
     }, []);
 
+    useEffect(() => {
+        if (selectedMes && selectedAno) {
+            const mesInt = parseInt(selectedMes);
+            const anoInt = parseInt(selectedAno);
+            lerDespesas(mesInt, anoInt);
+        }
+    }, [selectedMes, selectedAno]);
 
     return (
-
         <SafeAreaView className="flex-1 items-center justify-center bg-red-100">
-            <ScrollView >
-                <View className="flex-1 items-center justify-center bg-red-100 ">
-
-                    <Modal
-                        animationType="fade"
-                        transparent={false}
-                        visible={modalVisible}
-                        onRequestClose={() => {
-                            Alert.alert('Modal has been closed.');
-                            setModalVisible(!modalVisible);
-                        }}>
-                        <View className="mx-4 my-auto bg-red-100 items-center justify-center shadow rounded-lg ">
-                            <Text className="m-8 text-2xl font-bold">Despesa</Text>
-
-                            <StyledTextInput value={text} onChangeText={onChangeText} label={"Descrição"} />
-                            <StyledTextInput value={text} onChangeText={onChangeText} label={"Valor"} />
-                            <View className="flex flex-row gap-2">
-                                <StyledDropdown data={listMes} label={"Mês"} value={selectedMes} isFocus={isFocus}
-                                    onChange={item => {
-                                        setSelectedAno(item.value);
-                                        setIsFocus(false);
-
-                                    }} />
-                                <StyledDropdown data={listAnos} label={"Ano"} value={selectedAno} isFocus={isFocus}
-                                    onChange={item => {
-                                        setSelectedAno(item.value);
-                                        setIsFocus(false);
-
-                                    }} />
-                            </View>
-                            <View className="flex flex-row gap-2" >
-                                <Pressable
-                                    className="bg-red-50 p-2 m-4 w-28 items-center rounded-md text-white shadow"
-                                    onPress={() => setModalVisible(false)}>
-                                    <Text className="text-red-400 text-lg font-semibold">
-                                        {"Cancelar"}
-                                    </Text>
-                                </Pressable>
-
-                                <Pressable
-                                    className="bg-red-400 p-2 m-4 w-28 items-center rounded-md text-white shadow"
-                                    onPress={() => Alert.alert('salvo')}>
-                                    <Text className="text-white text-lg font-semibold">
-                                        {"Salvar"}
-                                    </Text>
-                                </Pressable>
-                            </View>
-
-                        </View>
-                    </Modal>
-
+            <ScrollView>
+                <View className="flex-1 items-center justify-center bg-red-100">
+                    <DespesaModal
+                        modalVisible={modalVisible}
+                        setModalVisible={setModalVisible}
+                        listMes={listMes}
+                        listAnos={listAnos}
+                        token={token}
+                    />
                     <View className="flex flex-row items-center justify-start">
                         <Text className="m-8 text-2xl font-bold">Despesas</Text>
-
                         <Pressable
                             className="bg-red-400 p-2 m-4 items-center rounded-md text-white shadow"
                             onPress={() => setModalVisible(true)}>
                             <Text className="text-white text-lg font-semibold">
-                                {"+ Nova Despesa"}
+                                {"Nova Despesa"}
                             </Text>
                         </Pressable>
                     </View>
-
                     <View className="flex flex-row gap-2">
                         <StyledDropdown data={listMes} label={"Mês"} value={selectedMes} isFocus={isFocus}
                             onChange={item => {
-                                setSelectedAno(item.value);
+                                setSelectedMes(item.value);
                                 setIsFocus(false);
-
                             }} />
                         <StyledDropdown data={listAnos} label={"Ano"} value={selectedAno} isFocus={isFocus}
                             onChange={item => {
                                 setSelectedAno(item.value);
                                 setIsFocus(false);
-
                             }} />
                     </View>
-                    <View className="flex flex-row items-center justify-start">
-
-                        <View className="w-44 bg-red-400 m-1 p-2 rounded">
-                            <Text className="text-white">Ifood</Text>
+                    {despesas.length > 0 ? despesas.map((despesa, index) => (
+                        <View key={index} className="flex flex-row items-center justify-start">
+                            <View className="w-44 bg-red-400 m-1 p-2 rounded">
+                                <Text className="text-white">{despesa.descricao}</Text>
+                            </View>
+                            <View className="w-16 bg-red-400 m-1 p-2 rounded">
+                                <Text className="text-white">{`R$ ${despesa.valor}`}</Text>
+                            </View>
+                            <View className="w-8 bg-red-400 m-1 p-2 rounded items-center">
+                                <Entypo name="edit" size={18} color="white" />
+                            </View>
+                            <View className="w-8 bg-red-400 m-1 p-2 rounded items-center">
+                                <MaterialIcons name="delete" size={18} color="white" />
+                            </View>
                         </View>
-                        <View className="w-16 bg-red-400 m-1 p-2 rounded">
-                            <Text className="text-white">R$100</Text>
-                        </View>
-                        <View className="w-8 bg-red-400 m-1 p-2 rounded items-center">
-                            <Entypo name="edit" size={18} color="white" />
-
-                        </View>
-                        <View className="w-8 bg-red-400 m-1 p-2 rounded items-center">
-                            <MaterialIcons name="delete" size={18} color="white" />
-                        </View>
-                    </View>
-
+                    )) : <Text className="m-8 text-xl font-bold">Nenhuma despesa encontrada</Text>}
                 </View>
             </ScrollView>
-
-        </SafeAreaView >
+        </SafeAreaView>
     );
 }
