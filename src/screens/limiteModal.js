@@ -24,7 +24,7 @@ export default function LimiteModal({ modalVisible, setModalVisible, listMes, li
         try {
             console.log(limite)
             console.log(token)
-            const response = await fetch('http://localhost:8080/limites/salvar', {
+            const response = await fetch('http://localhost:8080/limite/salvar', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
