@@ -42,7 +42,7 @@ export default function SignUp({ navigation }) {
 
         try {
             console.log("try")
-            const response = await fetch('http://localhost:8080/usuarios/salvar', {
+            const response = await fetch('http://localhost:8080/usuario/salvar', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

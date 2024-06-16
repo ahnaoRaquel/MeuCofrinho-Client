@@ -34,7 +34,7 @@ export default function DespesaModal({ modalVisible, setModalVisible, listMes, l
         };
         console.log(despesa)
         try {
-            const response = await fetch('http://localhost:8080/despesas/salvar', {
+            const response = await fetch('http://localhost:8080/despesa/salvar', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
