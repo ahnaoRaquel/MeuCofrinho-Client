@@ -43,7 +43,7 @@ export default function SignUp({ navigation }) {
 
         try {
             console.log("try")
-            const response = await fetch('http://192.168.0.13:8080/usuario/salvar', {
+            const response = await fetch('http://10.10.102.67:8080/usuario/salvar', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

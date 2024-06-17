@@ -11,15 +11,22 @@ import * as SecureStore from 'expo-secure-store';
 export default function SignIn({ navigation }) {
     const [username, setUsername] = React.useState('');
     const [password, setPassword] = React.useState('');
-    const { token, setToken } = useAuth();
-
+    const { token, setToken, setUser } = useAuth();
 
 
     const handleClickEntrar = async (e) => {
         try {
             console.log("try to login")
             const response = await authenticate(username, password);
+            const usuario = await fetch(`http://10.10.102.67:8080/usuario/buscar?id=${response.id}`, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${response.token}`,
+                },
+            });
+            setUser(await usuario.json())
             setToken(response.token);
+
             await SecureStore.setItemAsync("usuario", response.usuario);
             await SecureStore.setItemAsync("token", response.token);
             console.log(`usuario: ${response.usuario}`);

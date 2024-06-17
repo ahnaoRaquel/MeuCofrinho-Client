@@ -32,7 +32,7 @@ export default function Home() {
     const [despesas, setDespesas] = useState([]);
     const [somaDespesas, setSomaDespesas] = useState(0);
     const [limite, setLimite] = useState(null);
-    const { token } = useAuth();
+    const { token, user } = useAuth();
 
     function getYearsFromCurrent(numYears) {
         const listAno = [];
@@ -55,7 +55,7 @@ export default function Home() {
 
     const lerLimite = async (mes, ano) => {
         try {
-            const response = await fetch(`http://192.168.0.13:8080/limite/buscar?mes=${mes}&ano=${ano}`, {
+            const response = await fetch(`http://10.10.102.67:8080/limite/buscar?mes=${mes}&ano=${ano}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -81,7 +81,7 @@ export default function Home() {
 
     const lerDespesas = async (mes, ano) => {
         try {
-            const response = await fetch(`http://192.168.0.13:8080/despesa/buscar?mes=${mes}&ano=${ano}`, {
+            const response = await fetch(`http://10.10.102.67:8080/despesa/buscar?mes=${mes}&ano=${ano}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -122,7 +122,7 @@ export default function Home() {
 
     return (
         <SafeAreaView className="flex-1 bg-red-100 p-4">
-            <Text className="text-2xl font-bold mb-10">Oi, </Text>
+            <Text className="text-2xl font-bold mb-10">Seja bem-vindo! </Text>
             <View className="flex-1 items-center">
                 <View className="flex flex-row gap-2">
                     <StyledDropdown data={listMes} label={"Mês"} value={selectedMes} isFocus={isFocus}

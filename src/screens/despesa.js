@@ -54,7 +54,7 @@ export default function Despesa({ navigation }) {
 
     const lerDespesas = async (mes, ano) => {
         try {
-            const response = await fetch(`http://192.168.0.13:8080/despesa/buscar?mes=${mes}&ano=${ano}`, {
+            const response = await fetch(`http://10.10.102.67:8080/despesa/buscar?mes=${mes}&ano=${ano}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',

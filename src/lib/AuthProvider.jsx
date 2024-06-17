@@ -25,6 +25,7 @@ export const validateExpiredToken = (token) => {
 
 const AuthProvider = ({ children }) => {
   const [token, setTokenState] = useState(null);
+  const [user, setUser] = useState(null)
 
   const setToken = async (newToken) => {
     if (newToken) {
@@ -60,6 +61,8 @@ const AuthProvider = ({ children }) => {
       token,
       setToken,
       logout,
+      setUser,
+      user
     }),
     [token]
   );
