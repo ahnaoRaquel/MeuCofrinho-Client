@@ -43,7 +43,7 @@ export default function SignUp({ navigation }) {
 
         try {
             console.log("try")
-            const response = await fetch('http://localhost:8080/usuario/salvar', {
+            const response = await fetch('http://192.168.0.13:8080/usuario/salvar', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -59,7 +59,7 @@ export default function SignUp({ navigation }) {
                 navigation.navigate('SignIn');
             } else {
                 console.log('Erro na resposta:', response.status, response.statusText);
-                const errorData = await response.json(); // Se houver mensagem de erro detalhada do servidor
+                const errorData = await response.json(); 
                 setRespostaErro(errorData.errors || errorData.message || 'Erro desconhecido');
                 Alert.alert('Erro', errorData.errors || errorData.message || 'Erro desconhecido');
             }

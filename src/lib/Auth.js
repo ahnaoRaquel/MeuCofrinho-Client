@@ -2,7 +2,7 @@
 export const authenticate = async (username, password) => {
     try {
         console.log("Attempting to authenticate with username:", username);
-        const response = await fetch('http://localhost:8080/usuario/login', {
+        const response = await fetch(`http://192.168.0.13:8080/usuario/login`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -27,7 +27,7 @@ export const authenticate = async (username, password) => {
 
 export const create = async (nome, senha) => {
     try {
-        const response = await fetch('http://localhost:8080/usuario/salvar', {
+        const response = await fetch('http://192.168.0.13:8080/usuario/salvar', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
