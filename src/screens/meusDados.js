@@ -28,7 +28,7 @@ export default function MeusDados({ navigation }) {
                     <Text className="text-lg pb-2 text-gray-700">Raquel</Text>
 
                     <Text className="text-lg  font-medium">Email</Text>
-                    <Text className="text-lg  pb-2 text-gray-700">Raquel@email.com</Text>
+                    <Text className="text-lg  pb-2 text-gray-700">Raquel@gmail.com</Text>
 
                     <Text className="text-lg  font-medium">Data de Nascimento</Text>
                     <Text className="text-lg  pb-2 text-gray-700">01/10/1997</Text>

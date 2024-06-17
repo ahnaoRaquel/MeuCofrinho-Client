@@ -35,7 +35,7 @@ export default function SignUp({ navigation }) {
         const dados = {
             nome,
             username: email,
-            dataNascimento: textDtNasc,
+            dtNascimento: textDtNasc,
             password: senha
         };
 
